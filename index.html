@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ses Söndürücü Laboratuvarı</title>
+<meta name="description" content="Ses dalgasının frekansını, gücünü ve mesafesini değiştirip ekrandaki alevin sönüp sönmediğini deniyorum.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%230d0709'/%3E%3Cpath d='M9 2c1 3 4 4 4 8a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3 1-5 2-7z' fill='%23ff8a3d'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <h1>Ses Söndürücü <span>Laboratuvarı</span></h1>
+    <p class="lead">Ses dalgasının frekansını, gücünü ve mesafesini değiştirip ekrandaki alevin sönüp sönmediğini deniyorum. <b>Bu bir oyun modeli; gerçek ateşle asla denemem.</b></p>
+  </header>
+
+  <main class="grid">
+    <section class="card stageCard">
+      <canvas id="cv" aria-label="Hoparlör ve alev deney alanı"></canvas>
+      <div class="status" id="status">Hazır</div>
+      <div class="bar"><span>Alev gücü</span><div class="track"><i id="lvl"></i></div><b id="lvlTxt">%100</b></div>
+      <div class="buttons">
+        <button id="bRun" type="button" class="main">▶ Sesi aç</button>
+        <button id="bReset" type="button">🔥 Yeniden yak</button>
+        <label class="chk"><input id="cHear" type="checkbox"> Sesi duymak istiyorum (kısık)</label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Ayarlar</h2>
+      <label class="ctl">Ne yanıyor?
+        <select id="sFire">
+          <option value="mum">Mum</option>
+          <option value="alkol">Küçük alkol kabı</option>
+          <option value="kamp">Kamp ateşi</option>
+        </select>
+      </label>
+      <label class="ctl">Frekans <output id="oHz"></output>
+        <input id="rHz" type="range" min="0" max="1000" step="1">
+        <small id="hzKind"></small>
+      </label>
+      <div class="presets">
+        <button type="button" data-hz="45">45 Hz (bas)</button>
+        <button type="button" data-hz="440">440 Hz (La)</button>
+        <button type="button" data-hz="25000">25 kHz (ultrason)</button>
+      </div>
+      <label class="ctl">Ses gücü <output id="oDb"></output>
+        <input id="rDb" type="range" min="60" max="120" step="1">
+      </label>
+      <label class="ctl">Hoparlör ile alev arası <output id="oDist"></output>
+        <input id="rDist" type="range" min="5" max="150" step="1">
+      </label>
+
+      <div class="stats">
+        <div class="stat"><b id="sEff">–</b><span>etki</span></div>
+        <div class="stat"><b id="sPred">–</b><span>tahmin</span></div>
+        <div class="stat"><b id="sTime">–</b><span>sönme süresi</span></div>
+      </div>
+      <ul class="notes" id="notes"></ul>
+
+      <h3>Frekans etkisi</h3>
+      <canvas id="chart" class="chart" aria-label="Frekansa göre etki eğrisi"></canvas>
+    </section>
+
+    <section class="card wide">
+      <div class="cardHead">
+        <h2>Deney defterim</h2>
+        <button id="bClearLog" type="button">Defteri temizle</button>
+      </div>
+      <p class="hint">Her denemem burada kalıyor. Fen projesine yazarken işime yarıyor.</p>
+      <div class="tableWrap">
+        <table>
+          <thead><tr><th>#</th><th>Ateş</th><th>Frekans</th><th>Güç</th><th>Mesafe</th><th>Sonuç</th></tr></thead>
+          <tbody id="log"></tbody>
+        </table>
+      </div>
+      <p class="empty" id="logEmpty">Henüz deneme yok. "Sesi aç" diyerek başlayabilirim.</p>
+    </section>
+  </main>
+</div>
+<script type="module" src="app.mjs"></script>
+</body>
+</html>
